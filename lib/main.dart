@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'homepage.dart';
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 void main() {
   runApp(const MyApp());
 }
@@ -39,11 +42,47 @@ class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _textController = TextEditingController();
   final List<Message> _messages = [];
 
+  Future<void> _fetchBotResponse(String message) async {
+    final String apiUrl = 'http://170.64.147.213:5005/webhooks/rest/webhook';
+
+    final Map<String, dynamic> requestData = {
+      'sender': 'user1',
+      'message': message,
+    };
+
+    final http.Response response = await http.post(
+      Uri.parse(apiUrl),
+      body: jsonEncode(requestData),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonResponse = jsonDecode(response.body);
+
+      if (jsonResponse.isNotEmpty) {
+        final String botResponse = jsonResponse.first['text'];
+        _addBotResponse(botResponse);
+      }
+    } else {
+      // Handle error if needed
+      print('Failed to fetch bot response. Status code: ${response.statusCode}');
+    }
+  }
+
+  void _addBotResponse(String response) {
+    setState(() {
+      _messages.add(Message(sender: 'bot', text: response));
+    });
+  }
+
   void _onMessageSubmitted(String message) {
     _textController.clear();
     setState(() {
       _messages.add(Message(sender: 'me', text: message));
     });
+
+    // Fetch response from the chatbot API
+    _fetchBotResponse(message);
   }
 
   @override
@@ -78,7 +117,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       child: Container(
                         padding: const EdgeInsets.all(12.0),
                         decoration: BoxDecoration(
-                          color: isMe ? Colors.tealAccent.shade100 : Colors.grey[300],
+                          color: isMe ? Colors.tealAccent.shade200 : Colors.grey[500],
                           borderRadius: BorderRadius.circular(16.0),
                         ),
                         child: Text(
