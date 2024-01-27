@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'homepage.dart';
+
+import 'signup_page.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
-      home: HomePage(),
+      home: SignUpPage(),
     );
   }
 }
