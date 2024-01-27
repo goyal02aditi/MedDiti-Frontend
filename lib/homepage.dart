@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'main.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'rem.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -16,8 +18,9 @@ class _HomePageState extends State<HomePage> {
   // ignore: unused_field
   static final List<Widget> _widgetOptions = <Widget>[
     Text('Home'),
-    Text('Page 2'),
-    Text('Page 3'),
+    Text('Chatbot'),
+    Text('Shop'),
+    Text('Rem'),
   ];
    
   void _onItemTapped(int index) {
@@ -30,6 +33,11 @@ class _HomePageState extends State<HomePage> {
           MaterialPageRoute(builder: (context) => ChatScreen()),
         );
       }
+      if (index == 3) {
+        Navigator.push(context,
+         MaterialPageRoute(builder: (context) => RemScreen()),
+         );
+      }
     });
   }
 
@@ -41,6 +49,14 @@ class _HomePageState extends State<HomePage> {
       var width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        title: Text(
+                'MeDiTi',
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.teal[800],
+                ),
+              ),
          backgroundColor: Colors.white,
          centerTitle: true,
         actions: [
@@ -106,8 +122,12 @@ class _HomePageState extends State<HomePage> {
             label: 'ChatBot',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.phone),
-            label: 'Connect',
+            icon: Icon(Icons.shop),
+            label: 'Shop',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.timelapse),
+            label: 'Tablet Reminder',
           ),
         ],
         currentIndex: _selectedIndex,
@@ -125,7 +145,7 @@ class _HomePageState extends State<HomePage> {
         Padding(
             padding: const EdgeInsets.only(top: 20.0, left: 16.0, right: 16.0),
               child: Text(
-                'Good Morning,',
+                'Hello,',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -137,16 +157,28 @@ class _HomePageState extends State<HomePage> {
         Padding(
             padding: const EdgeInsets.only(left: 16.0, bottom: 16.0),
               child: Text(
-                'Jai!',
+                '#user',
                 style: TextStyle(
                  fontSize: 17,
                  fontWeight: FontWeight.bold,
-                 color: Colors.teal[800],
+                 color: Color.fromARGB(255, 95, 56, 56),
                 ),
               ),
             ),
 
-                 
+        Padding(
+            padding: const EdgeInsets.only(top: 20.0, left: 16.0, right: 16.0),
+              child: Center(
+               child: Text( 
+                'Two-Liner Tonics',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.teal[800],
+                ),
+                 ),
+              ),
+                           ),
         Container(
               margin: EdgeInsets.all(12.0),
               padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 32.0),
@@ -155,14 +187,16 @@ class _HomePageState extends State<HomePage> {
                 borderRadius: BorderRadius.circular(16.0),
                 color: Colors.white70,
               ),
-              child:
-               Text(
-                'Today is a new day, and a new opportunity to be great!',
+              child: Align(
+                alignment: Alignment.center,
+                 child:Text(
+                'Hydrate like a fish, move like a cheetah. Your body will thank you!',
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.normal,
                   backgroundColor: Colors.white70
-                ),
+                 ),
+                 ),
               ),
             ),
           
@@ -193,14 +227,22 @@ class _HomePageState extends State<HomePage> {
                  SizedBox(width: 16.0, height: 10,),
                  Expanded(
                     child: ElevatedButton(
-                      onPressed: () {
-                        // Perform the action related to '19/11'
-                      },
-                   child: Text('19/11'),
+                      onPressed: () async {
+                        final Uri url = Uri(
+                          scheme:'tel',
+                          path: "108",
+                          );
+                          if (await canLaunchUrl(url)) {
+                            await launchUrl(url);
+                            }else {
+                              print('cannot.launch.this.url');
+                            }
+                          },                    
+                   child: Text('Emergency'),
                    style:  ButtonStyle(
                       shadowColor: MaterialStateProperty.all(Colors.black),
                       elevation: MaterialStateProperty.all<double>(8),
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.teal.shade700),
+            backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 255, 0, 0)),
             foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
             padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(vertical: 16.0)),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(

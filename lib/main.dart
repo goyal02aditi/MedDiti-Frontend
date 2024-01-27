@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'homepage.dart';
-
+import 'rem.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
-void main() {
+import 'rem.dart';void main() {
   runApp(const MyApp());
 }
 
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Mediti Chatbot',
+      title: 'MediMate',
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
@@ -89,7 +88,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mediti Chatbot'),
+        title: const Text('MediMate'),
         foregroundColor: Colors.white,
         centerTitle: true,
         backgroundColor: Colors.teal.shade700,
