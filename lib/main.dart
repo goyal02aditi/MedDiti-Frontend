@@ -3,6 +3,8 @@ import 'homepage.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 
 void main() {
   runApp(const MyApp());
@@ -41,6 +43,55 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _textController = TextEditingController();
   final List<Message> _messages = [];
+
+  // Inside the _ChatScreenState class
+  Future<void> _launchURL(String url) async {
+    print(url);
+    final Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      print(uri);
+      await launchUrl(uri);
+    } else {
+      print('Could not launch $url');
+    }
+  }
+
+  Widget _buildMessage(Message message) {
+    final bool isMe = message.sender == 'me';
+
+    return Column(
+      crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      children: [
+        Text(
+          message.timestamp.hour.toString().padLeft(2, '0') +
+              ':' +
+              message.timestamp.minute.toString().padLeft(2, '0'),
+          style: const TextStyle(fontSize: 12),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 8.0,
+            horizontal: 16.0,
+          ),
+          child: Container(
+            padding: const EdgeInsets.all(12.0),
+            decoration: BoxDecoration(
+              color: isMe ? Colors.tealAccent.shade100 : Colors.grey[300],
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            child: Linkify(
+              onOpen: (link) => _launchURL(link.url),
+              text: message.text,
+              style: TextStyle(
+                color: isMe ? Colors.black : Colors.white,
+                fontSize: 16.0,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 
   Future<void> _fetchBotResponse(String message) async {
     final String apiUrl = 'http://170.64.147.213:5005/webhooks/rest/webhook';
@@ -102,35 +153,7 @@ class _ChatScreenState extends State<ChatScreen> {
               itemBuilder: (BuildContext context, int index) {
                 final Message message = _messages[index];
                 final bool isMe = message.sender == 'me';
-                return Column(
-                  crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      message.timestamp.hour.toString().padLeft(2, '0') + ':' + message.timestamp.minute.toString().padLeft(2, '0'),
-                      style: const TextStyle(fontSize: 12),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8.0,
-                        horizontal: 16.0,
-                      ),
-                      child: Container(
-                        padding: const EdgeInsets.all(12.0),
-                        decoration: BoxDecoration(
-                          color: isMe ? Colors.tealAccent.shade200 : Colors.grey[500],
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                        child: Text(
-                          message.text,
-                          style: TextStyle(
-                            color: isMe ? Colors.black : Colors.white,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                );
+                return _buildMessage(message);
               },
             ),
           ),
