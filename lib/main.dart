@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'homepage.dart';
+import 'rem.dart';
 import 'signup_page.dart';
-
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Mediti Chatbot',
+      title: 'MediMate',
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
@@ -77,7 +78,7 @@ class _ChatScreenState extends State<ChatScreen> {
           child: Container(
             padding: const EdgeInsets.all(12.0),
             decoration: BoxDecoration(
-              color: isMe ? Colors.tealAccent.shade100 : Colors.grey[300],
+              color: isMe ? Colors.tealAccent.shade100 : Colors.grey[400],
               borderRadius: BorderRadius.circular(16.0),
             ),
             child: Linkify(
@@ -141,7 +142,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mediti Chatbot'),
+        title: const Text('MediMate'),
         foregroundColor: Colors.white,
         centerTitle: true,
         backgroundColor: Colors.teal.shade700,
