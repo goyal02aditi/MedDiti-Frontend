@@ -4,6 +4,7 @@ import 'main.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'rem.dart';
 import 'shop.dart';
+import 'profile.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -19,6 +20,7 @@ class _HomePageState extends State<HomePage> {
     Text('Chatbot'),
     Text('Shop'),
     Text('Rem'),
+    Text('Profile'),
   ];
 
   void _onItemTapped(int index) {
@@ -43,6 +45,12 @@ class _HomePageState extends State<HomePage> {
           MaterialPageRoute(builder: (context) => RemScreen()),
         );
       }
+      if (index == 4) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ProfilePage()),
+        );
+      }
     });
   }
 
@@ -59,6 +67,7 @@ class _HomePageState extends State<HomePage> {
             fontSize: 25,
             fontWeight: FontWeight.bold,
             color: Colors.teal[800],
+            fontFamily: 'Diavlo',
           ),
         ),
         backgroundColor: Colors.white,
@@ -127,6 +136,10 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.timelapse),
             label: 'Tablet Reminder',
           ),
+           BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.teal.shade600,
@@ -155,7 +168,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.only(left: 16.0, bottom: 16.0),
               child: Text(
-                '#user',
+                'Aina',
                 style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.bold,

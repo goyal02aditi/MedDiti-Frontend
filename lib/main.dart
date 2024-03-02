@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.teal,
       ),
       home: SignUpPage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -142,10 +143,13 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MediMate'),
+        title: const Text('MediBot', style: TextStyle(
+      fontFamily: 'Diavlo', // Use the font family here
+    ),),
         foregroundColor: Colors.white,
         centerTitle: true,
         backgroundColor: Colors.teal.shade700,
+        
       ),
       body: Column(
         children: [

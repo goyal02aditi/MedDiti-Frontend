@@ -28,11 +28,12 @@ class SignUpPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'MeDiti',
+                  'MeDiTi',
                   style: TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
+                    fontFamily: 'Diavlo',
                   ),
                 ),
                 SizedBox(height: 20.0), // Adding some space

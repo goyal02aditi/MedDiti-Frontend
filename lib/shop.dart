@@ -27,13 +27,13 @@ class ShopScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Medicine Shop',
-
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.teal,
       ),
       home: MedicineShopPage(),
     );
   }
+  
 }
 
 class MedicineShopPage extends StatefulWidget {
@@ -146,16 +146,23 @@ class MedicineCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '\$${medicine.price.toStringAsFixed(2)}',
+                      '₹${medicine.price.toStringAsFixed(2)}',
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: onAddToCart,
-                      child: Text('Add to Cart'),
-                    ),
+  onPressed: onAddToCart,
+  child: Text(
+    'Add to Cart',
+    style: TextStyle(color: Colors.white), // Set text color to white
+  ),
+  style: ElevatedButton.styleFrom(
+    primary: Colors.teal, // Set background color to teal
+  ),
+),
+
                   ],
                 ),
               ],
